@@ -9,6 +9,12 @@ export class PKMNService {
     @InjectRepository(PKMN) private pkmnRepository: Repository<PKMN>,
   ) {}
   findAll(): Promise<PKMN[]> {
-    return this.pkmnRepository.find();
+    return this.pkmnRepository.find({
+      order: {
+        pkmnID: 'ASC',
+        variance: 'ASC',
+        variantName: 'ASC',
+      },
+    });
   }
 }
