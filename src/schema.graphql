@@ -3,16 +3,16 @@
 # ------------------------------------------------------
 
 type Challenge {
-  ID: Int!
+  id: Int!
   name: String!
   pkmns: [PKMN!]!
 }
 
 type PKMN {
-  ID: Int!
-  imageURL: String!
-  pkmnID: Int!
-  pkmnName: String!
+  dexNumber: Int!
+  id: Int!
+  name: String!
+  spriteURL: String!
   variance: String
   variantID: String!
   variantName: String
@@ -21,4 +21,5 @@ type PKMN {
 type Query {
   getAllChallenges: [Challenge!]!
   getAllPKMN: [PKMN!]!
+  getChallenge(id: Int!): Challenge
 }

@@ -11,7 +11,7 @@ export class PKMNService {
   findAll(): Promise<PKMN[]> {
     return this.pkmnRepository.find({
       order: {
-        pkmnID: 'ASC',
+        dexNumber: 'ASC',
         variance: 'ASC',
         variantName: 'ASC',
       },
