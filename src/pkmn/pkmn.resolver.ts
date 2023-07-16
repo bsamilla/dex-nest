@@ -13,11 +13,10 @@ export class PKMNResolver {
   }
 
   @ResolveField(() => String)
-  async imageURL(@Parent() pkmn: PKMN) {
-    return `https://pokejungle.net/sprites/normal/${pkmn.pkmnID
-      .toString()
-      .padStart(4, '0')}${pkmn.variantID || ''}${
-      varianceID[pkmn.variance as keyof typeof varianceID] || ''
-    }.png`;
+  spriteURL(@Parent() pkmn: PKMN) {
+    const dexNumber = pkmn.dexNumber.toString().padStart(4, '0');
+    const variant = pkmn.variantID || '';
+    const variance = varianceID[pkmn.variance as keyof typeof varianceID] || '';
+    return `${process.env.SPRITE_URL}${dexNumber}${variant}${variance}.png`;
   }
 }
