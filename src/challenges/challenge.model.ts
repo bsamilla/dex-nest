@@ -13,7 +13,7 @@ import { PKMN } from 'src/models';
 export class Challenge {
   @Field(() => Int)
   @PrimaryGeneratedColumn({ type: 'bigint' })
-  ID: number;
+  id: number;
 
   @Field()
   @Column()
@@ -21,6 +21,16 @@ export class Challenge {
 
   @Field(() => [PKMN])
   @ManyToMany(() => PKMN)
-  @JoinTable()
+  @JoinTable({
+    name: 'challenge_pkmn',
+    joinColumn: {
+      name: 'challenge',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'pkmn',
+      referencedColumnName: 'id',
+    },
+  })
   pkmns: PKMN[];
 }

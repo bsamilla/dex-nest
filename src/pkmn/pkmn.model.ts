@@ -6,18 +6,19 @@ import { ObjectType, Field, Int } from '@nestjs/graphql';
 export class PKMN {
   @Field(() => Int)
   @PrimaryGeneratedColumn({ type: 'bigint' })
-  ID: number;
+  id: number;
 
   @Field(() => Int)
   @Column({
     type: 'integer',
     default: 0,
+    name: 'dex_number',
   })
-  pkmnID: number;
+  dexNumber: number;
 
   @Field()
   @Column()
-  pkmnName: string;
+  name: string;
 
   @Field(() => String, { nullable: true })
   @Column({
@@ -30,6 +31,7 @@ export class PKMN {
   @Column({
     nullable: true,
     default: null,
+    name: 'variant_id',
   })
   variantID?: string;
 
@@ -37,9 +39,10 @@ export class PKMN {
   @Column({
     nullable: true,
     default: null,
+    name: 'variant_name',
   })
   variantName?: string;
 
   @Field()
-  imageURL: string;
+  spriteURL: string;
 }
