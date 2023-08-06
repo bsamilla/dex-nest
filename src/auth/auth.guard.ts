@@ -7,7 +7,6 @@ import {
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
-import * as dotenv from 'dotenv';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -19,21 +18,18 @@ export class AuthGuard implements CanActivate {
     if (!token) {
       throw new UnauthorizedException();
     }
-    // try {
-    console.log(token);
-    const payload = await this.jwtService.verifyAsync(token, {
-      secret: 'Random%Key&To%Test&JWT%In&My%New&Dex%App',
-    });
-    console.log(payload);
-    ctx['user'] = payload;
-    // } catch {
-    //   throw new UnauthorizedException();
-    // }
+    try {
+      const payload = await this.jwtService.verifyAsync(token, {
+        secret: process.env.JWT_KEY,
+      });
+      ctx['user'] = payload;
+    } catch {
+      throw new UnauthorizedException();
+    }
     return true;
   }
 
   private extractTokenFromHeader(request: Request): string | undefined {
-    console.log(request.headers.authorization, 'request.headers.authorization');
     const [type, token] = request.headers.authorization?.split(' ') ?? [];
     return type === 'Bearer' ? token : undefined;
   }
