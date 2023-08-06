@@ -8,13 +8,18 @@ type Challenge {
   pkmns: [PKMN!]!
 }
 
+type Mutation {
+  logIn(password: String!, trainerName: String!): String!
+  signUp(password: String!, trainerName: String!): String!
+}
+
 type PKMN {
   dexNumber: Int!
   id: Int!
   name: String!
   spriteURL: String!
   variance: String
-  variantID: String!
+  variantID: String
   variantName: String
 }
 

@@ -9,6 +9,8 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { PKMNModule } from './pkmn/pkmn.module';
 import { ChallengeModule } from './challenges/challenge.module';
+import { AuthModule } from './auth/auth.module';
+import { TrainersModule } from './trainers/trainers.module';
 
 @Module({
   imports: [
@@ -17,6 +19,7 @@ import { ChallengeModule } from './challenges/challenge.module';
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.graphql'),
       sortSchema: true,
+      context: ({ req }: { req: Request }) => ({ headers: req.headers }),
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -34,6 +37,8 @@ import { ChallengeModule } from './challenges/challenge.module';
     }),
     PKMNModule,
     ChallengeModule,
+    AuthModule,
+    TrainersModule,
   ],
 
   controllers: [AppController],

@@ -27,7 +27,7 @@ export class PKMN {
   })
   variance?: string;
 
-  @Field()
+  @Field(() => String, { nullable: true })
   @Column({
     nullable: true,
     default: null,

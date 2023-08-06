@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { Challenge } from 'src/challenges/challenge.model';
 
@@ -7,13 +13,18 @@ import { Challenge } from 'src/challenges/challenge.model';
 export class Trainer {
   @Field(() => Int)
   @PrimaryGeneratedColumn({ type: 'bigint' })
-  ID: number;
+  id: number;
+
+  @Field()
+  @Column({ unique: true })
+  name: string;
 
   @Field()
   @Column()
-  name: string;
+  password: string;
 
   @Field(() => Challenge, { nullable: true })
-  @ManyToOne(() => Challenge)
+  @ManyToOne(() => Challenge, (challenge) => challenge.id)
+  @JoinColumn({ name: 'challenge_id' })
   challenge?: Challenge;
 }
