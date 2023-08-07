@@ -13,6 +13,6 @@ export class ChallengeResolver {
 
   @Query(() => Challenge, { nullable: true })
   getChallenge(@Args('id', { type: () => Int }) id: number) {
-    return this.challengeService.find(id);
+    return this.challengeService.findById(id);
   }
 }

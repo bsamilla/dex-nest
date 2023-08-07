@@ -24,11 +24,11 @@ export class Challenge {
   @JoinTable({
     name: 'challenge_pkmn',
     joinColumn: {
-      name: 'challenge',
+      name: 'challenge_id',
       referencedColumnName: 'id',
     },
     inverseJoinColumn: {
-      name: 'pkmn',
+      name: 'pkmn_id',
       referencedColumnName: 'id',
     },
   })

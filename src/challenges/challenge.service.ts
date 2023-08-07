@@ -10,8 +10,9 @@ export class ChallengeService {
     private challengeRepository: Repository<Challenge>,
   ) {}
 
-  findAll(): Promise<Challenge[]> {
-    return this.challengeRepository.find({
+  async findById(id: number): Promise<Challenge | null> {
+    return this.challengeRepository.findOne({
+      where: { id: id },
       relations: { pkmns: true },
       order: {
         pkmns: {
@@ -23,9 +24,8 @@ export class ChallengeService {
     });
   }
 
-  find(id: number): Promise<Challenge | null> {
-    return this.challengeRepository.findOne({
-      where: { id: id },
+  async findAll(): Promise<Challenge[]> {
+    return await this.challengeRepository.find({
       relations: { pkmns: true },
       order: {
         pkmns: {

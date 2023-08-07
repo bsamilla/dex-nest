@@ -9,6 +9,10 @@ export class TrainersService {
     @InjectRepository(Trainer) private trainerRepository: Repository<Trainer>,
   ) {}
 
+  async findById(id: number): Promise<Trainer | null> {
+    return await this.trainerRepository.findOne({ where: { id: id } });
+  }
+
   async findByName(trainerName: string): Promise<Trainer | null> {
     return await this.trainerRepository.findOne({
       where: { name: trainerName },

@@ -7,5 +7,6 @@ import { PKMN } from './pkmn.model';
 @Module({
   imports: [TypeOrmModule.forFeature([PKMN])],
   providers: [PKMNService, PKMNResolver],
+  exports: [PKMNService],
 })
 export class PKMNModule {}
