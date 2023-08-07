@@ -11,6 +11,7 @@ type Challenge {
 type Mutation {
   logIn(password: String!, trainerName: String!): String!
   signUp(password: String!, trainerName: String!): String!
+  updateProgress(challengeId: Float!, pkmnId: Float!, trainerId: Float!): Progress!
 }
 
 type PKMN {
@@ -23,8 +24,23 @@ type PKMN {
   variantName: String
 }
 
+type Progress {
+  challenge: Challenge!
+  id: Int!
+  pkmns: [PKMN!]!
+  trainer: Trainer!
+}
+
 type Query {
   getAllChallenges: [Challenge!]!
   getAllPKMN: [PKMN!]!
   getChallenge(id: Int!): Challenge
+  getProgress(challengeId: Int!, trainerId: Int!): [Progress!]!
+}
+
+type Trainer {
+  challenge: Challenge
+  id: Int!
+  name: String!
+  password: String!
 }

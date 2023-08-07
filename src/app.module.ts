@@ -11,6 +11,7 @@ import { PKMNModule } from './pkmn/pkmn.module';
 import { ChallengeModule } from './challenges/challenge.module';
 import { AuthModule } from './auth/auth.module';
 import { TrainersModule } from './trainers/trainers.module';
+import { ProgressModule } from './catches/progress.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { TrainersModule } from './trainers/trainers.module';
     ChallengeModule,
     AuthModule,
     TrainersModule,
+    ProgressModule,
   ],
 
   controllers: [AppController],
