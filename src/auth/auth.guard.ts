@@ -14,10 +14,10 @@ export class AuthGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const ctx = GqlExecutionContext.create(context).getContext();
-    const token = this.extractTokenFromHeader(ctx.req);
-    if (!token) {
-      throw new UnauthorizedException();
-    }
+    const token = this._extractTokenFromHeader(ctx.req);
+
+    if (!token) throw new UnauthorizedException();
+
     try {
       const payload = await this.jwtService.verifyAsync(token, {
         secret: process.env.JWT_KEY,
@@ -29,7 +29,7 @@ export class AuthGuard implements CanActivate {
     return true;
   }
 
-  private extractTokenFromHeader(request: Request): string | undefined {
+  private _extractTokenFromHeader(request: Request): string | undefined {
     const [type, token] = request.headers.authorization?.split(' ') ?? [];
     return type === 'Bearer' ? token : undefined;
   }
