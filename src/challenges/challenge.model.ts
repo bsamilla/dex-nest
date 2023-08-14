@@ -1,12 +1,6 @@
-import {
-  Column,
-  Entity,
-  JoinTable,
-  ManyToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { PKMN } from 'src/models';
+import { Target } from 'src/target/target.model';
 
 @ObjectType()
 @Entity()
@@ -19,18 +13,7 @@ export class Challenge {
   @Column()
   name: string;
 
-  @Field(() => [PKMN])
-  @ManyToMany(() => PKMN)
-  @JoinTable({
-    name: 'challenge_pkmn',
-    joinColumn: {
-      name: 'challenge_id',
-      referencedColumnName: 'id',
-    },
-    inverseJoinColumn: {
-      name: 'pkmn_id',
-      referencedColumnName: 'id',
-    },
-  })
-  pkmns: PKMN[];
+  @Field(() => [Target])
+  @OneToMany(() => Target, (target) => target.challenge)
+  targets: Target[];
 }

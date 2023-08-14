@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { Target } from 'src/target/target.model';
 
 @ObjectType()
 @Entity()
@@ -42,6 +43,9 @@ export class PKMN {
     name: 'variant_name',
   })
   variantName?: string;
+
+  @OneToMany(() => Target, (target) => target.pkmn)
+  targets: Target[];
 
   @Field()
   spriteURL: string;

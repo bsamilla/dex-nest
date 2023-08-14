@@ -1,12 +1,6 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { Challenge } from 'src/challenges/challenge.model';
+import { Progress } from 'src/progress/progress.model';
 
 @ObjectType()
 @Entity()
@@ -23,8 +17,7 @@ export class Trainer {
   @Column()
   password: string;
 
-  @Field(() => Challenge, { nullable: true })
-  @ManyToOne(() => Challenge, (challenge) => challenge.id)
-  @JoinColumn({ name: 'challenge_id' })
-  challenge?: Challenge;
+  @Field(() => [Progress], { nullable: true })
+  @OneToMany(() => Progress, (progress) => progress.trainer)
+  targets?: Progress[];
 }
