@@ -1,9 +1,10 @@
 import { ExecutionContext, createParamDecorator } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
 
+// This decorator allows to use the current user in resolvers
 export const GetUser = createParamDecorator(
   (data: unknown, ctx: ExecutionContext) => {
-    const ctxgql = GqlExecutionContext.create(ctx);
-    return ctxgql.getContext().req.user;
+    const gqlctx = GqlExecutionContext.create(ctx);
+    return gqlctx.getContext().req.user;
   },
 );
