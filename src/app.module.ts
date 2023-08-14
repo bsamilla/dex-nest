@@ -12,6 +12,7 @@ import { ChallengeModule } from './challenges/challenge.module';
 import { AuthModule } from './auth/auth.module';
 import { TrainersModule } from './trainers/trainers.module';
 import { ProgressModule } from './progress/progress.module';
+import { TargetModule } from './target/target.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { ProgressModule } from './progress/progress.module';
     AuthModule,
     TrainersModule,
     ProgressModule,
+    TargetModule,
   ],
 
   controllers: [AppController],
