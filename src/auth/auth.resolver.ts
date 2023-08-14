@@ -7,18 +7,18 @@ export class AuthResolver {
 
   @Mutation(() => String)
   signUp(
-    @Args('trainerName') trainerName: string,
+    @Args('username') username: string,
     @Args('password') password: string,
   ) {
-    const trainer = this.authService.signUp(trainerName, password);
+    const trainer = this.authService.signUp(username, password);
     return trainer;
   }
 
   @Mutation(() => String)
   logIn(
-    @Args('trainerName') trainerName: string,
+    @Args('username') username: string,
     @Args('password') password: string,
   ) {
-    return this.authService.logIn(trainerName, password);
+    return this.authService.logIn(username, password);
   }
 }

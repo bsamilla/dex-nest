@@ -9,8 +9,8 @@ type Challenge {
 }
 
 type Mutation {
-  logIn(password: String!, trainerName: String!): String!
-  signUp(password: String!, trainerName: String!): String!
+  logIn(password: String!, username: String!): String!
+  signUp(password: String!, username: String!): String!
   updateProgress(challengeId: Float!, pkmnId: Float!, trainerId: Float!): Progress!
 }
 

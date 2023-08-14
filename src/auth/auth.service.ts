@@ -16,20 +16,17 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async signUp(trainerName: string, password: string): Promise<string> {
+  async signUp(username: string, password: string): Promise<string> {
     const hashPassword = await bcrypt.hash(password, 10);
-    const trainer = await this.trainerService.createNew(
-      trainerName,
-      hashPassword,
-    );
+    const trainer = await this.trainerService.createNew(username, hashPassword);
     if (trainer) {
       return this.logIn(trainer.name, password);
     }
     throw new InternalServerErrorException('AUTH-0001');
   }
 
-  async logIn(trainerName: string, password: string): Promise<string> {
-    const trainer = await this.trainerService.findByName(trainerName);
+  async logIn(username: string, password: string): Promise<string> {
+    const trainer = await this.trainerService.findByName(username);
     if (!trainer) {
       throw new BadRequestException('User not found');
     } else if (!(await bcrypt.compare(password, trainer.password))) {
