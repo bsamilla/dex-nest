@@ -33,7 +33,7 @@ export class PKMN {
     default: null,
     name: 'variant_id',
   })
-  variantID?: string;
+  variantId?: string;
 
   @Field(() => String, { nullable: true })
   @Column({

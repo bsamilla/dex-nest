@@ -11,7 +11,6 @@ type Challenge {
 type Mutation {
   logIn(password: String!, username: String!): String!
   signUp(password: String!, username: String!): String!
-  updateProgress(challengeId: Float!, pkmnId: Float!, trainerId: Float!): Progress!
 }
 
 type PKMN {
@@ -20,7 +19,7 @@ type PKMN {
   name: String!
   spriteURL: String!
   variance: String
-  variantID: String
+  variantId: String
   variantName: String
 }
 

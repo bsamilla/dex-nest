@@ -18,7 +18,7 @@ export class PKMNResolver {
   @ResolveField(() => String)
   spriteURL(@Parent() pkmn: PKMN) {
     const dexNumber = pkmn.dexNumber.toString().padStart(4, '0');
-    const variant = pkmn.variantID || '';
+    const variant = pkmn.variantId ?? '';
     const variance = varianceID[pkmn.variance as keyof typeof varianceID] || '';
     return `${process.env.SPRITE_URL}${dexNumber}${variant}${variance}.png`;
   }
