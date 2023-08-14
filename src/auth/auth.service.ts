@@ -28,7 +28,7 @@ export class AuthService {
   async logIn(username: string, password: string): Promise<string> {
     const trainer = await this.trainerService.findByName(username);
     if (!trainer) {
-      throw new BadRequestException('User not found');
+      throw new BadRequestException('TRAINER-02000');
     } else if (!(await bcrypt.compare(password, trainer.password))) {
       throw new UnauthorizedException();
     }

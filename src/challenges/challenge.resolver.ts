@@ -7,7 +7,7 @@ export class ChallengeResolver {
   constructor(private challengeService: ChallengeService) {}
 
   @Query(() => [Challenge])
-  getAllChallenges() {
+  getChallenges() {
     return this.challengeService.findAll();
   }
 

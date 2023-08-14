@@ -13,12 +13,10 @@ export class ChallengeService {
   async findById(id: number): Promise<Challenge | null> {
     return this.challengeRepository.findOne({
       where: { id: id },
-      relations: { pkmns: true },
+      relations: { targets: true },
       order: {
-        pkmns: {
-          dexNumber: 'ASC',
-          variance: 'ASC',
-          variantName: 'ASC',
+        targets: {
+          pkmn: { dexNumber: 'ASC', variance: 'ASC', variantName: 'ASC' },
         },
       },
     });
@@ -26,12 +24,10 @@ export class ChallengeService {
 
   async findAll(): Promise<Challenge[]> {
     return await this.challengeRepository.find({
-      relations: { pkmns: true },
+      relations: { targets: true },
       order: {
-        pkmns: {
-          dexNumber: 'ASC',
-          variance: 'ASC',
-          variantName: 'ASC',
+        targets: {
+          pkmn: { dexNumber: 'ASC', variance: 'ASC', variantName: 'ASC' },
         },
       },
     });
