@@ -20,7 +20,7 @@ import { ProgressModule } from './catches/progress.module';
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.graphql'),
       sortSchema: true,
-      context: ({ req }: { req: Request }) => ({ headers: req.headers }),
+      context: ({ req }: { req: Request }) => ({ req }),
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
