@@ -11,7 +11,7 @@ import { PKMNModule } from './pkmn/pkmn.module';
 import { ChallengeModule } from './challenges/challenge.module';
 import { AuthModule } from './auth/auth.module';
 import { TrainersModule } from './trainers/trainers.module';
-import { ProgressModule } from './catches/progress.module';
+import { ProgressModule } from './progress/progress.module';
 
 @Module({
   imports: [
