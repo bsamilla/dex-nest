@@ -2,46 +2,32 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Challenge {
-  id: Int!
-  name: String!
-  targets: [Target!]!
-}
-
-type Mutation {
-  logIn(password: String!, username: String!): String!
-  signUp(password: String!, username: String!): String!
-}
-
-type PKMN {
-  dexNumber: Int!
-  id: Int!
-  name: String!
-  spriteURL: String!
-  variance: String
-  variantId: String
-  variantName: String
-}
-
 type Progress {
   target: Target!
   trainer: Trainer!
 }
 
-type Query {
-  getAllPKMN: [PKMN!]!
-  getChallenge(id: Int!): Challenge
-  getChallenges: [Challenge!]!
-  getProgress(challengeId: Int!): [Progress!]!
-  getTarget(id: Int!): Target
-  getTargets(challengeId: Int!): [Target!]!
-}
-
 type Target {
-  challenge: Challenge!
   id: Int!
+  challenge: Challenge!
   pkmn: PKMN!
   progress: [Progress!]!
+}
+
+type PKMN {
+  id: Int!
+  dexNumber: Int!
+  name: String!
+  variance: String
+  variantId: String
+  variantName: String
+  spriteURL: String!
+}
+
+type Challenge {
+  id: Int!
+  name: String!
+  targets: [Target!]!
 }
 
 type Trainer {
@@ -49,4 +35,18 @@ type Trainer {
   name: String!
   password: String!
   targets: [Progress!]
+}
+
+type Query {
+  getProgress(challengeId: Int!): [Progress!]!
+  getAllPKMN: [PKMN!]!
+  getChallenges: [Challenge!]!
+  getChallenge(id: Int!): Challenge
+  getTargets(challengeId: Int!): [Target!]!
+  getTarget(id: Int!): Target
+}
+
+type Mutation {
+  signUp(username: String!, password: String!): String!
+  logIn(username: String!, password: String!): String!
 }

@@ -17,5 +17,6 @@ import { TargetModule } from 'src/target/target.module';
     TypeOrmModule.forFeature([Progress]),
   ],
   providers: [ProgressService, ProgressResolver],
+  exports: [ProgressService],
 })
 export class ProgressModule {}

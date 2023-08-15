@@ -13,15 +13,25 @@ import { AuthModule } from './auth/auth.module';
 import { TrainersModule } from './trainers/trainers.module';
 import { ProgressModule } from './progress/progress.module';
 import { TargetModule } from './target/target.module';
+import { DataloaderService } from './dataloader/dataloader.service';
+import { DataloaderModule } from './dataloader/dataloader.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env' }),
-    GraphQLModule.forRoot<ApolloDriverConfig>({
+    GraphQLModule.forRootAsync<ApolloDriverConfig>({
       driver: ApolloDriver,
-      autoSchemaFile: join(process.cwd(), 'src/schema.graphql'),
-      sortSchema: true,
-      context: ({ req }: { req: Request }) => ({ req }),
+      imports: [DataloaderModule],
+      useFactory: (dataloaderService: DataloaderService) => {
+        return {
+          autoSchemaFile: join(process.cwd(), 'src/schema.graphql'),
+          context: ({ req }: { req: Request }) => ({
+            req,
+            loaders: dataloaderService.getLoaders(),
+          }),
+        };
+      },
+      inject: [DataloaderService],
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -34,6 +44,7 @@ import { TargetModule } from './target/target.module';
         database: configService.get('DB_NAME'),
         entities: models,
         synchronize: true,
+        logging: true,
       }),
       inject: [ConfigService],
     }),

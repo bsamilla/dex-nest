@@ -1,11 +1,21 @@
-import { Resolver, Query, Args, Int } from '@nestjs/graphql';
+import {
+  Resolver,
+  Query,
+  Args,
+  Int,
+  ResolveField,
+  Parent,
+  Context,
+} from '@nestjs/graphql';
 import { Target } from './target.model';
 import { TargetService } from './target.service';
 import { GetUser } from 'src/auth/auth.decorator';
 import { UseGuards } from '@nestjs/common';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { Progress } from 'src/progress/progress.model';
+import { IDataloaders } from 'src/dataloader/dataloader.interface';
 
-@Resolver()
+@Resolver(() => Target)
 export class TargetResolver {
   constructor(private targetService: TargetService) {}
 
@@ -22,5 +32,17 @@ export class TargetResolver {
   @Query(() => Target, { nullable: true })
   getTarget(@Args('id', { type: () => Int }) id: number) {
     return this.targetService.findById(id);
+  }
+
+  @ResolveField('progress', () => [Progress])
+  getProgress(
+    @Parent() target: Target,
+    @Context() { loaders }: { loaders: IDataloaders },
+    @GetUser() user: any,
+  ) {
+    return loaders.progressLoader.load({
+      trainerId: user.id,
+      targetId: target.id,
+    });
   }
 }

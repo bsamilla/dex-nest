@@ -30,7 +30,6 @@ export class Target {
   @JoinColumn({ name: 'pkmn_id' })
   pkmn: PKMN;
 
-  @Field(() => [Progress])
   @OneToMany(() => Progress, (progress) => progress.target)
   progress: Progress[];
 }

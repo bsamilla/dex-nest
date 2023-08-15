@@ -51,4 +51,29 @@ export class ProgressService {
       throw new BadRequestException('PROGRESS-23505');
     }
   }
+
+  async getProgressByTargetAndTrainer(
+    values: { trainerId: number; targetId: number }[],
+  ): Promise<Progress[]> {
+    const trainerId = values[0].trainerId;
+    const targetIds = values.map((value) => value.targetId);
+    return await this.progressRepository
+      .createQueryBuilder('progress')
+      .where('progress.trainer = :trainerId', { trainerId })
+      .leftJoinAndSelect('progress.trainer', 'trainer')
+      .leftJoinAndSelect('progress.target', 'target')
+      .andWhere('progress.target IN (:...targetIds)', { targetIds })
+      .getMany();
+  }
+
+  async getMappedProgressByTarget(
+    values: { trainerId: number; targetId: number }[],
+  ): Promise<any[]> {
+    const progresses = await this.getProgressByTargetAndTrainer(values);
+    return values.map(
+      ({ targetId }) =>
+        progresses.filter((progress) => targetId === progress.target.id) ||
+        null,
+    );
+  }
 }

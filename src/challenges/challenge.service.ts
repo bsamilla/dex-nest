@@ -11,15 +11,17 @@ export class ChallengeService {
   ) {}
 
   async findById(id: number): Promise<Challenge | null> {
-    return this.challengeRepository.findOne({
-      where: { id: id },
-      relations: { targets: true },
-      order: {
-        targets: {
-          pkmn: { dexNumber: 'ASC', variance: 'ASC', variantName: 'ASC' },
-        },
-      },
-    });
+    return this.challengeRepository
+      .createQueryBuilder('challenge')
+      .leftJoinAndSelect('challenge.targets', 'target')
+      .leftJoinAndSelect('target.pkmn', 'pkmn')
+      .where('challenge.id = :challengeId', { challengeId: id })
+      .orderBy({
+        'pkmn.dexNumber': 'ASC',
+        'pkmn.variance': 'ASC',
+        'pkmn.variantName': 'ASC',
+      })
+      .getOne();
   }
 
   async findAll(): Promise<Challenge[]> {
